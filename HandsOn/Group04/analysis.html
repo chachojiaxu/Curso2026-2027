@@ -278,7 +278,26 @@
   </section>
   <section id="resource-naming">
     <h2>3. Resource naming strategy</h2>
-    <p>Pending completion by the members responsible for resource naming.</p>
+    <h3>Domain and ontology resources</h3>
+    <p>The proposed base URI is <code>http://breathemadrid.es/</code>. The ontology namespace is <code>http://breathemadrid.es/ontology#</code>, matching the current ontology file. Classes and properties use fragment identifiers, for example <code>http://breathemadrid.es/ontology#Station</code> and <code>http://breathemadrid.es/ontology#observedAt</code>. Class names start with a capital letter and property names with a lowercase letter.</p>
+    <p>This domain is a naming proposal: registration, control and hosting have not been verified. Before online publication, the group must secure this domain or replace the base consistently in the ontology, examples and generated data.</p>
+    <h3>Individual resources</h3>
+    <p>Individuals use slash URIs under <code>http://breathemadrid.es/resource/</code>, with a separate path for each resource type. Identifiers come from stable source codes rather than names, row positions or class URIs.</p>
+    <table>
+      <thead><tr><th>Resource type</th><th>URI pattern after the base</th><th>Identifier rule and example</th></tr></thead>
+      <tbody>
+        <tr><td>Station</td><td><code>resource/station/{stationCode}</code></td><td>Full eight-digit station code from <code>CODIGO</code>, e.g. <code>resource/station/28079004</code>. Measurement <code>ESTACION</code> is joined to <code>CODIGO_CORTO</code> to obtain the full code.</td></tr>
+        <tr><td>Municipality</td><td><code>resource/municipality/{municipalityCode}</code></td><td>Two-digit province code followed by the three-digit municipality code, preserving leading zeros: <code>28</code> + <code>079</code> gives <code>resource/municipality/28079</code>.</td></tr>
+        <tr><td>Pollutant</td><td><code>resource/pollutant/{magnitudeCode}</code></td><td>The integer value of <code>MAGNITUD</code>, without leading zeros, e.g. <code>resource/pollutant/8</code> for NO2.</td></tr>
+        <tr><td>Observation</td><td><code>resource/observation/{samplingPoint}/{date}/{hour}</code></td><td>Original <code>PUNTO_MUESTREO</code>, source date in <code>YYYY-MM-DD</code> format and hourly field <code>H01</code>–<code>H24</code>, e.g. <code>resource/observation/28079011_12_8/2026-10-01/H01</code>.</td></tr>
+        <tr><td>Station type, if included in the final ontology</td><td><code>resource/station-type/{typeCode}</code></td><td>The original <code>COD_TIPO</code>, e.g. <code>resource/station-type/UT</code>.</td></tr>
+      </tbody>
+    </table>
+    <p>For example, the station URI is <code>http://breathemadrid.es/resource/station/28079004</code>; it does not contain the class URI. Changes to a station name, label or classification will therefore not change its identity. Observation identifiers distinguish station, magnitude, technique, source date and hourly slot. Updated values for the same slot keep the same URI; they do not create a new observation merely because the CSV is downloaded again. Path segments containing reserved characters will be percent-encoded.</p>
+    <p>The date and hour in an observation URI preserve the source fields. When constructing its timestamp, H24 is represented as midnight of the following day. Local-time conventions must be retained; UTC must not be assumed. The municipality instance for Madrid can be linked to <code>http://www.wikidata.org/entity/Q2807</code>, while stations remain distinct resources located in that municipality.</p>
+    <h3>Dereferencing and content negotiation</h3>
+    <p>For ontology fragment URIs, the server receives <code>http://breathemadrid.es/ontology</code>. The planned configuration will return human-readable documentation for <code>Accept: text/html</code> and the ontology serialization for <code>Accept: text/turtle</code>, with the corresponding <code>Content-Type</code> and <code>Vary: Accept</code> headers.</p>
+    <p>Individual URIs identify real-world entities or observations. The planned server will respond with <code>303 See Other</code>, redirecting to a description under <code>/page/{type}/{identifier}</code> for HTML or <code>/data/{type}/{identifier}.ttl</code> for Turtle. For example, the station URI will redirect to <code>/page/station/28079004</code> or <code>/data/station/28079004.ttl</code>, depending on the requested format. Observation descriptions retain all identifier segments. These are publication plans; content negotiation and URI dereferencing are not yet deployed.</p>
   </section>
 </body>
 </html>
