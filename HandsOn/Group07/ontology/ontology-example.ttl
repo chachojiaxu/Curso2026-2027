@@ -1,84 +1,116 @@
-@prefix ue:  <http://www.madridurbanenvironment.org/ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ue:   <http://www.madridurbanenvironment.org/ontology/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 #################################################################
-# District
+#    Districts
 #################################################################
-ue:District_01 a ue:District ;
-    ue:districtCode "01" .
+
+<http://www.madridurbanenvironment.org/resource/District/7>
+    a ue:District ;
+    rdfs:label "CHAMBERI"^^xsd:string ;
+    ue:districtCode "7"^^xsd:string .
+
+<http://www.madridurbanenvironment.org/resource/District/2>
+    a ue:District ;
+    rdfs:label "ARGANZUELA"^^xsd:string ;
+    ue:districtCode "2"^^xsd:string .
 
 #################################################################
-# Neighborhood
+#    Neighborhoods
 #################################################################
-ue:Neighborhood_011 a ue:Neighborhood ;
-    ue:code "011" ;
-    ue:belongsToDistrict ue:District_01 .
+
+<http://www.madridurbanenvironment.org/resource/Neighborhood/72>
+    a ue:Neighborhood ;
+    rdfs:label "GAZTAMBIDE"^^xsd:string ;
+    ue:code "72"^^xsd:string ;
+    ue:belongsToDistrict <http://www.madridurbanenvironment.org/resource/District/7> .
+
+<http://www.madridurbanenvironment.org/resource/Neighborhood/25>
+    a ue:Neighborhood ;
+    rdfs:label "LEGAZPI"^^xsd:string ;
+    ue:code "25"^^xsd:string ;
+    ue:belongsToDistrict <http://www.madridurbanenvironment.org/resource/District/2> .
 
 #################################################################
-# DrinkingFountain
+#    Drinking fountain (people only)
 #################################################################
-ue:Fountain_1001 a ue:DrinkingFountain ;
-    ue:identifier "1001" ;
-    ue:name "Fuente Plaza Mayor" ;
-    ue:model "Fuente tipo Madrid" ;
-    ue:status "Operativa" ;
-    ue:intendedUse "people and pets" ;
-    ue:installationDate "2015-06-12"^^xsd:date ;
-    ue:streetName "Plaza Mayor" ;
-    ue:streetNumber "1" ;
-    ue:postalCode "28012" ;
-    ue:latitude "40.41544"^^xsd:decimal ;
-    ue:longitude "-3.70743"^^xsd:decimal ;
-    ue:locatedInDistrict ue:District_01 ;
-    ue:locatedInNeighborhood ue:Neighborhood_011 .
+
+<http://www.madridurbanenvironment.org/resource/Fountain/10050012>
+    a ue:DrinkingFountain ;
+    rdfs:label "Fuente 10050012 - Calle de Arapiles"^^xsd:string ;
+    ue:name "Fuente 10050012 - Calle de Arapiles"^^xsd:string ;
+    ue:identifier "10050012"^^xsd:string ;
+    ue:classification "Fuentes de beber"^^xsd:string ;
+    ue:status "OPERATIVO"^^xsd:string ;
+    ue:intendedUse "PERSONAS"^^xsd:string ;
+    ue:streetType "CALLE"^^xsd:string ;
+    ue:streetName "ARAPILES"^^xsd:string ;
+    ue:streetNumber "14"^^xsd:string ;
+    ue:postalCode "28015"^^xsd:string ;
+    ue:utmX "440512.30"^^xsd:decimal ;
+    ue:utmY "4475120.55"^^xsd:decimal ;
+    ue:locatedInDistrict <http://www.madridurbanenvironment.org/resource/District/7> ;
+    ue:locatedInNeighborhood <http://www.madridurbanenvironment.org/resource/Neighborhood/72> .
 
 #################################################################
-# Bench
+#    Bench
 #################################################################
-ue:Bench_5001 a ue:Bench ;
-    ue:identifier "5001" ;
-    ue:name "Banco Calle Mayor 10" ;
-    ue:model "Banco clásico de madera" ;
-    ue:status "Operativo" ;
-    ue:installationDate "2018-03-20"^^xsd:date ;
-    ue:streetName "Calle Mayor" ;
-    ue:streetNumber "10" ;
-    ue:postalCode "28013" ;
-    ue:latitude "40.41537"^^xsd:decimal ;
-    ue:longitude "-3.70812"^^xsd:decimal ;
-    ue:locatedInDistrict ue:District_01 ;
-    ue:locatedInNeighborhood ue:Neighborhood_011 .
+
+<http://www.madridurbanenvironment.org/resource/Bench/200310>
+    a ue:Bench ;
+    rdfs:label "Banco 200310 - PASEO DE LA CHOPERA"^^xsd:string ;
+    ue:name "Banco 200310 - PASEO DE LA CHOPERA"^^xsd:string ;
+    ue:identifier "200310"^^xsd:string ;
+    ue:classification "Banco"^^xsd:string ;
+    ue:status "FUERA_DE_SERVICIO"^^xsd:string ;
+    ue:streetType "PASEO"^^xsd:string ;
+    ue:streetName "DE LA CHOPERA"^^xsd:string ;
+    ue:streetNumber "10"^^xsd:string ;
+    ue:postalCode "28045"^^xsd:string ;
+    ue:utmX "440980.12"^^xsd:decimal ;
+    ue:utmY "4472310.40"^^xsd:decimal ;
+    ue:locatedInDistrict <http://www.madridurbanenvironment.org/resource/District/2> ;
+    ue:locatedInNeighborhood <http://www.madridurbanenvironment.org/resource/Neighborhood/25> .
 
 #################################################################
-# PublicToilet
+#    Park
 #################################################################
-ue:Toilet_300 a ue:PublicToilet ;
-    ue:identifier "300" ;
-    ue:name "Aseo público Plaza de Oriente" ;
-    ue:installationDate "2020-09-01"^^xsd:date ;
-    ue:streetName "Plaza de Oriente" ;
-    ue:streetNumber "s/n" ;
-    ue:postalCode "28013" ;
-    ue:latitude "40.41826"^^xsd:decimal ;
-    ue:longitude "-3.71140"^^xsd:decimal ;
-    ue:locatedInDistrict ue:District_01 ;
-    ue:locatedInNeighborhood ue:Neighborhood_011 .
+
+<http://www.madridurbanenvironment.org/resource/Park/6001234>
+    a ue:Park ;
+    rdfs:label "Parque de Madrid Rio (tramo Arganzuela)"^^xsd:string ;
+    ue:name "Parque de Madrid Rio (tramo Arganzuela)"^^xsd:string ;
+    ue:identifier "6001234"^^xsd:string ;
+    ue:description "Linear riverside park with cycling paths, playgrounds and promenades."^^xsd:string ;
+    ue:accessibilityLevel "1"^^xsd:integer ;
+    ue:webPage "https://www.madrid.es/"^^xsd:anyURI ;
+    ue:schedule "Abierto 24 horas"^^xsd:string ;
+    ue:streetType "PASEO"^^xsd:string ;
+    ue:streetName "DE LA CHOPERA"^^xsd:string ;
+    ue:streetNumber "S/N"^^xsd:string ;
+    ue:locality "MADRID"^^xsd:string ;
+    ue:province "MADRID"^^xsd:string ;
+    ue:postalCode "28045"^^xsd:string ;
+    ue:utmX "440850"^^xsd:decimal ;
+    ue:utmY "4472400"^^xsd:decimal ;
+    ue:locatedInDistrict <http://www.madridurbanenvironment.org/resource/District/2> ;
+    ue:locatedInNeighborhood <http://www.madridurbanenvironment.org/resource/Neighborhood/25> .
 
 #################################################################
-# Park
+#    Public toilet
 #################################################################
-ue:Park_200 a ue:Park ;
-    ue:identifier "200" ;
-    ue:name "Parque del Retiro" ;
-    ue:model "Jardín histórico" ;
-    ue:schedule "06:00-24:00" ;
-    ue:accessibilityLevel 1 ;
-    ue:webPage "https://www.madrid.es/retiro"^^xsd:anyURI ;
-    ue:streetName "Plaza de la Independencia" ;
-    ue:streetNumber "7" ;
-    ue:postalCode "28001" ;
-    ue:latitude "40.41531"^^xsd:decimal ;
-    ue:longitude "-3.68446"^^xsd:decimal ;
-    ue:locatedInDistrict ue:District_01 ;
-    ue:locatedInNeighborhood ue:Neighborhood_011 .
+
+<http://www.madridurbanenvironment.org/resource/PublicToilet/030112BCN>
+    a ue:PublicToilet ;
+    rdfs:label "PLAZA DE OLAVIDE,1"^^xsd:string ;
+    ue:name "PLAZA DE OLAVIDE,1"^^xsd:string ;
+    ue:identifier "030112BCN"^^xsd:string ;
+    ue:status "OPERATIVO"^^xsd:string ;
+    ue:streetType "PLAZA"^^xsd:string ;
+    ue:streetName "DE OLAVIDE"^^xsd:string ;
+    ue:streetNumber "1"^^xsd:string ;
+    ue:utmX "441020.77"^^xsd:decimal ;
+    ue:utmY "4475390.10"^^xsd:decimal ;
+    ue:locatedInDistrict <http://www.madridurbanenvironment.org/resource/District/7> ;
+    ue:locatedInNeighborhood <http://www.madridurbanenvironment.org/resource/Neighborhood/72> .

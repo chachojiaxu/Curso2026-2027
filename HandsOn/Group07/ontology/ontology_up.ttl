@@ -8,45 +8,22 @@
 @base <http://www.madridurbanenvironment.org/ontology/> .
 
 <http://www.madridurbanenvironment.org/ontology/> rdf:type owl:Ontology ;
-                                                   rdfs:comment "Lightweight ontology for drinking fountains, benches, public toilets and parks of Madrid."@en ;
+                                                   rdfs:comment "Ontology for drinking fountains, benches, public toilets and parks of Madrid."@en ;
                                                    rdfs:label "Madrid urban environment ontology"@en .
-
-#################################################################
-#    Datatypes
-#################################################################
-
-###  http://www.w3.org/2001/XMLSchema#date
-xsd:date rdf:type rdfs:Datatype .
-
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://www.madridurbanenvironment.org/ontology/belongsToDistrict
-ue:belongsToDistrict rdf:type owl:ObjectProperty ;
-                     rdfs:domain ue:Neighborhood ;
-                     rdfs:range ue:District ;
-                     rdfs:label "belongs to district"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/locatedInDistrict
-ue:locatedInDistrict rdf:type owl:ObjectProperty ;
-                     rdfs:domain ue:UrbanFacility ;
-                     rdfs:range ue:District ;
-                     rdfs:label "located in district"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/locatedInNeighborhood
-ue:locatedInNeighborhood rdf:type owl:ObjectProperty ;
-                         rdfs:domain ue:UrbanFacility ;
-                         rdfs:range ue:Neighborhood ;
-                         rdfs:label "located in neighborhood"@en .
-
 
 #################################################################
 #    Data properties
 #################################################################
+
+###  http://www.madridurbanenvironment.org/ontology/District
+ue:District rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.madridurbanenvironment.org/ontology/Neighborhood
+ue:Neighborhood rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty .
+
 
 ###  http://www.madridurbanenvironment.org/ontology/accessibilityLevel
 ue:accessibilityLevel rdf:type owl:DatatypeProperty ;
@@ -55,19 +32,28 @@ ue:accessibilityLevel rdf:type owl:DatatypeProperty ;
                       rdfs:label "accessibility level"@en .
 
 
+###  http://www.madridurbanenvironment.org/ontology/classification
+ue:classification rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ue:UrbanFacility ;
+                  rdfs:range xsd:string ;
+                  rdfs:label "classification"@en .
+
+
 ###  http://www.madridurbanenvironment.org/ontology/code
 ue:code rdf:type owl:DatatypeProperty ;
-        rdfs:domain ue:Neighborhood ;
-        rdfs:range xsd:string ;
-        rdfs:comment "Official numeric code of a district or neighborhood."@en ;
-        rdfs:label "code"@en .
+        rdfs:subPropertyOf ue:Neighborhood .
+
+
+###  http://www.madridurbanenvironment.org/ontology/description
+ue:description rdf:type owl:DatatypeProperty ;
+               rdfs:domain ue:Park ;
+               rdfs:range xsd:string ;
+               rdfs:label "description"@en .
 
 
 ###  http://www.madridurbanenvironment.org/ontology/districtCode
 ue:districtCode rdf:type owl:DatatypeProperty ;
-                rdfs:domain ue:District ;
-                rdfs:range xsd:string ;
-                rdfs:label "district code"@en .
+                rdfs:subPropertyOf ue:District .
 
 
 ###  http://www.madridurbanenvironment.org/ontology/identifier
@@ -75,15 +61,6 @@ ue:identifier rdf:type owl:DatatypeProperty ;
               rdfs:domain ue:UrbanFacility ;
               rdfs:range xsd:string ;
               rdfs:label "identifier"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/installationDate
-ue:installationDate rdf:type owl:DatatypeProperty ;
-                    rdfs:domain ue:Bench ,
-                                ue:DrinkingFountain ,
-                                ue:PublicToilet ;
-                    rdfs:range xsd:date ;
-                    rdfs:label "installation date"@en .
 
 
 ###  http://www.madridurbanenvironment.org/ontology/intendedUse
@@ -94,27 +71,11 @@ ue:intendedUse rdf:type owl:DatatypeProperty ;
                rdfs:label "intended use"@en .
 
 
-###  http://www.madridurbanenvironment.org/ontology/latitude
-ue:latitude rdf:type owl:DatatypeProperty ;
-            rdfs:domain ue:UrbanFacility ;
-            rdfs:range xsd:decimal ;
-            rdfs:label "latitude"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/longitude
-ue:longitude rdf:type owl:DatatypeProperty ;
-             rdfs:domain ue:UrbanFacility ;
-             rdfs:range xsd:decimal ;
-             rdfs:label "longitude"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/model
-ue:model rdf:type owl:DatatypeProperty ;
-         rdfs:domain ue:Bench ,
-                     ue:DrinkingFountain ,
-                     ue:Park ;
-         rdfs:range xsd:string ;
-         rdfs:label "model"@en .
+###  http://www.madridurbanenvironment.org/ontology/locality
+ue:locality rdf:type owl:DatatypeProperty ;
+            rdfs:domain ue:Park ;
+            rdfs:range xsd:string ;
+            rdfs:label "locality"@en .
 
 
 ###  http://www.madridurbanenvironment.org/ontology/name
@@ -131,6 +92,13 @@ ue:postalCode rdf:type owl:DatatypeProperty ;
               rdfs:label "postal code"@en .
 
 
+###  http://www.madridurbanenvironment.org/ontology/province
+ue:province rdf:type owl:DatatypeProperty ;
+            rdfs:domain ue:Park ;
+            rdfs:range xsd:string ;
+            rdfs:label "province"@en .
+
+
 ###  http://www.madridurbanenvironment.org/ontology/schedule
 ue:schedule rdf:type owl:DatatypeProperty ;
             rdfs:domain ue:Park ;
@@ -140,9 +108,9 @@ ue:schedule rdf:type owl:DatatypeProperty ;
 
 ###  http://www.madridurbanenvironment.org/ontology/status
 ue:status rdf:type owl:DatatypeProperty ;
-          rdfs:domain ue:Bench ,
-                      ue:DrinkingFountain ;
+          rdfs:domain ue:UrbanFacility ;
           rdfs:range xsd:string ;
+          rdfs:comment "Operational status, e.g. OPERATIVO or FUERA_DE_SERVICIO."@en ;
           rdfs:label "status"@en .
 
 
@@ -160,6 +128,36 @@ ue:streetNumber rdf:type owl:DatatypeProperty ;
                 rdfs:label "street number"@en .
 
 
+###  http://www.madridurbanenvironment.org/ontology/streetType
+ue:streetType rdf:type owl:DatatypeProperty ;
+              rdfs:domain ue:UrbanFacility ;
+              rdfs:range xsd:string ;
+              rdfs:label "street type"@en .
+
+
+###  http://www.madridurbanenvironment.org/ontology/utmX
+ue:utmX rdf:type owl:DatatypeProperty ;
+        rdfs:domain ue:UrbanFacility ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "Easting in ETRS89 / UTM zone 30N."@en ;
+        rdfs:label "UTM X"@en .
+
+
+###  http://www.madridurbanenvironment.org/ontology/utmY
+ue:utmY rdf:type owl:DatatypeProperty ;
+        rdfs:domain ue:UrbanFacility ;
+        rdfs:range xsd:decimal ;
+        rdfs:comment "Northing in ETRS89 / UTM zone 30N."@en ;
+        rdfs:label "UTM Y"@en .
+
+
+###  http://www.madridurbanenvironment.org/ontology/webPage
+ue:webPage rdf:type owl:DatatypeProperty ;
+           rdfs:domain ue:Park ;
+           rdfs:range xsd:anyURI ;
+           rdfs:label "web page"@en .
+
+
 #################################################################
 #    Classes
 #################################################################
@@ -170,22 +168,10 @@ ue:Bench rdf:type owl:Class ;
          rdfs:label "Bench"@en .
 
 
-###  http://www.madridurbanenvironment.org/ontology/District
-ue:District rdf:type owl:Class ;
-            rdfs:comment "Administrative district of Madrid."@en ;
-            rdfs:label "District"@en .
-
-
 ###  http://www.madridurbanenvironment.org/ontology/DrinkingFountain
 ue:DrinkingFountain rdf:type owl:Class ;
                     rdfs:subClassOf ue:UrbanFacility ;
                     rdfs:label "Drinking fountain"@en .
-
-
-###  http://www.madridurbanenvironment.org/ontology/Neighborhood
-ue:Neighborhood rdf:type owl:Class ;
-                rdfs:comment "Neighborhood (barrio) inside a district of Madrid."@en ;
-                rdfs:label "Neighborhood"@en .
 
 
 ###  http://www.madridurbanenvironment.org/ontology/Park

@@ -1795,5 +1795,31 @@
     "repeat": false,
     "repeatCount": 0,
     "description": "Transforma el texto de las celdas en la columna h24 usando la expresión value.toNumber()"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "punto_muestreo",
+    "expression": "grel:value.substring(0,5)",
+    "onError": "set-to-blank",
+    "newColumnName": "cod_municipio",
+    "columnInsertIndex": 5,
+    "description": "Crear la columna cod_municipio en el índice 5 basada en la columna punto_muestreo usando la expresión grel:value.substring(0,5)"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "punto_muestreo",
+    "expression": "grel:value.substring(0,8)",
+    "onError": "set-to-blank",
+    "newColumnName": "cod_estacion",
+    "columnInsertIndex": 5,
+    "description": "Crear la columna cod_estacion en el índice 5 basada en la columna punto_muestreo usando la expresión grel:value.substring(0,8)"
   }
 ]

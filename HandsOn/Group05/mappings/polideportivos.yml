@@ -1,0 +1,85 @@
+# Hands-On 4 - Group05
+# Reglas de mapping en YARRRML equivalentes a mappings/polideportivos.rml
+# Ejecutado con morph-kgc 2.10 desde HandsOn/Group05 (ruta del CSV relativa a ese directorio)
+
+prefixes:
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  geo: http://www.w3.org/2003/01/geo/wgs84_pos#
+  grel: http://users.ugent.be/~bjdmeest/function/grel.ttl#
+  morph-kgc: https://github.com/morph-kgc/morph-kgc/function/built-in.ttl#
+  ont: http://smartcity.linkeddata.es/sports/ontology/
+  sc: http://smartcity.linkeddata.es/sports/resource/SportsCenter/
+  district: http://smartcity.linkeddata.es/sports/resource/District/
+
+sources:
+  polideportivos: [csv/200186-0-polideportivos-updated.csv~csv]
+
+mappings:
+
+  sportscenter:
+    sources: polideportivos
+    s: sc:$(PK)
+    po:
+      - [a, ont:SportsCenter]
+      - [rdfs:label, $(NOMBRE), es~lang]
+      - [ont:pk, $(PK), xsd:integer]
+      - [ont:equipmentDescription, $(EQUIPAMIENTO), xsd:string]
+      - [ont:transportInfo, $(TRANSPORTE), xsd:string]
+      - [geo:lat, $(LATITUD), xsd:float]
+      - [geo:long, $(LONGITUD), xsd:float]
+      # Columnas multivaluadas: un literal por valor
+      - p: ont:accessibilityInfo
+        o:
+          function: grel:string_split
+          parameters:
+            - [grel:valueParameter, $(ACCESIBILIDAD)]
+            - [grel:p_string_sep, ","]
+          datatype: xsd:string
+      - p: ont:telephone
+        o:
+          function: grel:string_split
+          parameters:
+            - [grel:valueParameter, $(TELEFONO)]
+            - [grel:p_string_sep, ";"]
+          datatype: xsd:string
+      - p: ont:email
+        o:
+          function: grel:string_split
+          parameters:
+            - [grel:valueParameter, $(EMAIL)]
+            - [grel:p_string_sep, ";"]
+          datatype: xsd:string
+      # Enlace con el distrito (join por la columna DISTRITO)
+      - p: ont:locatedInDistrict
+        o:
+          mapping: district
+          condition:
+            function: equal
+            parameters:
+              - [str1, $(DISTRITO), s]
+              - [str2, $(DISTRITO), o]
+
+  district:
+    sources: polideportivos
+    # URI: .../resource/District/ + replace(toLowerCase(DISTRITO), " ", "-")
+    s:
+      function: morph-kgc:concat
+      parameters:
+        - [grel:valueParameter1, "http://smartcity.linkeddata.es/sports/resource/District/"]
+        - parameter: grel:valueParameter2
+          value:
+            function: grel:string_replace
+            parameters:
+              - parameter: grel:valueParameter
+                value:
+                  function: grel:toLowerCase
+                  parameters:
+                    - [grel:valueParameter, $(DISTRITO)]
+              - [grel:p_string_find, " "]
+              - [grel:p_string_replace, "-"]
+      type: iri
+    po:
+      - [a, ont:District]
+      - [rdfs:label, $(DISTRITO), es~lang]
